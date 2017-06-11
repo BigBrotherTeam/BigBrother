@@ -294,7 +294,7 @@ class DesktopPlayer extends Player{
 
 			$pk = new TitlePacket();
 			$pk->actionID = TitlePacket::TYPE_SET_SUB_TITLE;
-			$pk->data = TextFormat::toJSON(TextFormat::YELLOW . TextFormat::BOLD . "This is a beta version of BigBrother.");
+			$pk->data = TextFormat::toJSON(TextFormat::YELLOW . TextFormat::BOLD . "This is a beta version of GameCraftPC");
 			$this->putRawPacket($pk);
 		}
 	}

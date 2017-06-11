@@ -7,10 +7,10 @@ port: 25565
 network-compression-threshold: 256
 
 #Sets the server description on the server list
-motd: "§bPocketMine-MP server using §6§lBigBrother§r§b plugin\n§aConnect to Minecraft: PE servers from PC clients"
+motd: "§9BlockCraftPE on PC!"
 
 #Use Mojang services to authenticate players
-online-mode: true
+online-mode: false
 
 #This is Skin Settings
 skin-yml: "steve.yml"
