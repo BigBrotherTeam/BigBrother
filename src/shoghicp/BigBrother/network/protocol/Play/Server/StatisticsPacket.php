@@ -38,7 +38,7 @@ class StatisticsPacket extends OutboundPacket{
 	/** @var array */
 	public $statistic = [];
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::STATISTICS_PACKET;
 	}
 

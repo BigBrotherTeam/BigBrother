@@ -38,7 +38,7 @@ class EntityPropertiesPacket extends OutboundPacket{
 	/** @var array */
 	public $entries = [];
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::ENTITY_PROPERTIES_PACKET;
 	}
 

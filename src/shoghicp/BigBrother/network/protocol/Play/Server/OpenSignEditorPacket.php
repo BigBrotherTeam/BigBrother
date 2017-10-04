@@ -40,7 +40,7 @@ class OpenSignEditorPacket extends OutboundPacket{
 	/** @var int */
 	public $z;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::OPEN_SIGN_EDITOR_PACKET;
 	}
 

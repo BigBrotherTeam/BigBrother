@@ -36,7 +36,7 @@ class KeepAlivePacket extends OutboundPacket{
 	/** @var int */
 	public $id;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::KEEP_ALIVE_PACKET;
 	}
 

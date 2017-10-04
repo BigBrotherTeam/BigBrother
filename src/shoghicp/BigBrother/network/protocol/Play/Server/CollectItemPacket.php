@@ -40,7 +40,7 @@ class CollectItemPacket extends OutboundPacket{
 	/** @var int */
 	public $itemCount;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::COLLECT_ITEM_PACKET;
 	}
 

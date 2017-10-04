@@ -38,7 +38,7 @@ class EntityHeadLookPacket extends OutboundPacket{
 	/** @var int */
 	public $yaw;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::ENTITY_HEAD_LOOK_PACKET;
 	}
 

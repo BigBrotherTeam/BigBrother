@@ -47,7 +47,7 @@ class EntityTeleportPacket extends OutboundPacket{
 	/** @var bool */
 	public $onGround = true;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::ENTITY_TELEPORT_PACKET;
 	}
 

@@ -42,7 +42,7 @@ class PlayerListPacket extends OutboundPacket{
 	/** @var array */
 	public $players = [];
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::PLAYER_LIST_PACKET;
 	}
 

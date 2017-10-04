@@ -48,7 +48,7 @@ class JoinGamePacket extends OutboundPacket{
 	/** @var bool */
 	public $reducedDebugInfo = false;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::JOIN_GAME_PACKET;
 	}
 

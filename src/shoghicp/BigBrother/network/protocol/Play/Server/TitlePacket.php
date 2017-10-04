@@ -44,7 +44,7 @@ class TitlePacket extends OutboundPacket{
 	/** @var string|int[] */
 	public $data = null;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::TITLE_PACKET;
 	}
 

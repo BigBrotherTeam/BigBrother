@@ -44,7 +44,7 @@ class PlayerDiggingPacket extends InboundPacket{
 	/** @var int */
 	public $face;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::PLAYER_DIGGING_PACKET;
 	}
 

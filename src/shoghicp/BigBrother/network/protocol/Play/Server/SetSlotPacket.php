@@ -41,7 +41,7 @@ class SetSlotPacket extends OutboundPacket{
 	/** @var Item */
 	public $item;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::SET_SLOT_PACKET;
 	}
 

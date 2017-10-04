@@ -42,7 +42,7 @@ class EntityVelocityPacket extends OutboundPacket{
 	/** @var float */
 	public $velocityZ;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::ENTITY_VELOCITY_PACKET;
 	}
 

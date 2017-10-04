@@ -38,7 +38,7 @@ class PluginMessagePacket extends OutboundPacket{
 	/** @var array */
 	public $data = [];
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::PLUGIN_MESSAGE_PACKET;
 	}
 

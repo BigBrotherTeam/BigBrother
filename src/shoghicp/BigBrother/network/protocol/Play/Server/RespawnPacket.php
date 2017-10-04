@@ -42,7 +42,7 @@ class RespawnPacket extends OutboundPacket{
 	/** @var string */
 	public $levelType;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::RESPAWN_PACKET;
 	}
 

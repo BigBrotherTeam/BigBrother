@@ -39,7 +39,7 @@ class CreativeInventoryActionPacket extends InboundPacket{
 	/** @var Item */
 	public $item;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::CREATIVE_INVENTORY_ACTION_PACKET;
 	}
 

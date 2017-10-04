@@ -50,7 +50,7 @@ class PlayerBlockPlacementPacket extends InboundPacket{
 	/** @var float */
 	public $cursorZ;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::PLAYER_BLOCK_PLACEMENT_PACKET;
 	}
 

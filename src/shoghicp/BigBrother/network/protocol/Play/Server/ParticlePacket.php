@@ -56,7 +56,7 @@ class ParticlePacket extends OutboundPacket{
 	/** @var array */
 	public $addData = [];
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::PARTICLE_PACKET;
 	}
 

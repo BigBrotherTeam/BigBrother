@@ -36,7 +36,7 @@ class TabCompletePacket extends OutboundPacket{
 	/** @var string[] */
 	public $matches = [];
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::TAB_COMPLETE_PACKET;
 	}
 

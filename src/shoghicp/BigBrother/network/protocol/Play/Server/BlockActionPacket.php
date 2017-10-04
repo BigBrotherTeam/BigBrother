@@ -46,7 +46,7 @@ class BlockActionPacket extends OutboundPacket{
 	/** @var int */
 	public $blockType;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::BLOCK_ACTION_PACKET;
 	}
 

@@ -40,7 +40,7 @@ class WindowPropertyPacket extends OutboundPacket{
 	/** @var short */
 	public $value;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::WINDOW_PROPERTY_PACKET;
 	}
 

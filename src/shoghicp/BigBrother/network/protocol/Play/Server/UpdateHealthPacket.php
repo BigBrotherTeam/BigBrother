@@ -40,7 +40,7 @@ class UpdateHealthPacket extends OutboundPacket{
 	/** @var float */
 	public $saturation;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::UPDATE_HEALTH_PACKET;
 	}
 

@@ -36,7 +36,7 @@ class TeleportConfirmPacket extends InboundPacket{
 	/** @var int */
 	public $teleportId;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::TELEPORT_CONFIRM_PACKET;
 	}
 

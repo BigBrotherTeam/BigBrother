@@ -40,7 +40,7 @@ class SetExperiencePacket extends OutboundPacket{
 	/** @var int */
 	public $totalexperience;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::SET_EXPERIENCE_PACKET;
 	}
 

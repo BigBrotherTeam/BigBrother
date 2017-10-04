@@ -48,7 +48,7 @@ class UpdateSignPacket extends InboundPacket{
 	/** @var string */
 	public $line4;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::UPDATE_SIGN_PACKET;
 	}
 

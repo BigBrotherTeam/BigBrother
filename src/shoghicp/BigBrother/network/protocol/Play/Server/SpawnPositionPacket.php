@@ -40,7 +40,7 @@ class SpawnPositionPacket extends OutboundPacket{
 	/** @var int */
 	public $spawnZ;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::SPAWN_POSITION_PACKET;
 	}
 

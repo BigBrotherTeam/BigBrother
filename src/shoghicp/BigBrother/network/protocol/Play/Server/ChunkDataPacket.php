@@ -50,7 +50,7 @@ class ChunkDataPacket extends OutboundPacket{
 	/** @var array */
 	public $blockEntities = [];
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::CHUNK_DATA_PACKET;
 	}
 

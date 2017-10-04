@@ -38,7 +38,7 @@ class LoginSuccessPacket extends OutboundPacket{
 	/** @var string */
 	public $name;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::LOGIN_SUCCESS_PACKET;
 	}
 

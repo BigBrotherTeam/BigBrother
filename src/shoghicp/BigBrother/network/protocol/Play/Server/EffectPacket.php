@@ -46,7 +46,7 @@ class EffectPacket extends OutboundPacket{
 	/** @var bool */
 	public $disableRelativeVolume;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::EFFECT_PACKET;
 	}
 

@@ -38,7 +38,7 @@ class EncryptionResponsePacket extends InboundPacket{
 	/** @var string */
 	public $verifyToken;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::ENCRYPTION_RESPONSE_PACKET;
 	}
 

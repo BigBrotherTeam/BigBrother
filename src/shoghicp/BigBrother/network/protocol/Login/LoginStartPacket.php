@@ -36,7 +36,7 @@ class LoginStartPacket extends InboundPacket{
 	/** @var string */
 	public $name;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::LOGIN_START_PACKET;
 	}
 

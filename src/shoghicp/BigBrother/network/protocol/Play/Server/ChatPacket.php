@@ -38,7 +38,7 @@ class ChatPacket extends OutboundPacket{
 	/** @var int */
 	public $position = 0; //0 = chat, 1 = system message, 2 = action bar
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::CHAT_PACKET;
 	}
 

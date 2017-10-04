@@ -48,7 +48,7 @@ class PlayerPositionAndLookPacket extends OutboundPacket{
 	/** @var int */
 	public $teleportId = 0;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::PLAYER_POSITION_AND_LOOK_PACKET;
 	}
 

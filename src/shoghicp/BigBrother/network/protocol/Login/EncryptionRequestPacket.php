@@ -40,7 +40,7 @@ class EncryptionRequestPacket extends OutboundPacket{
 	/** @var string */
 	public $verifyToken;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::ENCRYPTION_REQUEST_PACKET;
 	}
 

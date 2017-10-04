@@ -36,7 +36,7 @@ class PlayDisconnectPacket extends OutboundPacket{
 	/** @var string */
 	public $reason;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::PLAY_DISCONNECT_PACKET;
 	}
 

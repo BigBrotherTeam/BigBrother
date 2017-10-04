@@ -61,7 +61,7 @@ class SpawnMobPacket extends OutboundPacket{
 	/** @var array */
 	public $metadata;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::SPAWN_MOB_PACKET;
 	}
 

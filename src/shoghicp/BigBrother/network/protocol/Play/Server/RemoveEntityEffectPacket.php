@@ -38,7 +38,7 @@ class RemoveEntityEffectPacket extends OutboundPacket{
 	/** @var int */
 	public $effectId;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::REMOVE_ENTITY_EFFECT_PACKET;
 	}
 

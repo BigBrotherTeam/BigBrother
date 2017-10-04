@@ -41,7 +41,7 @@ class EntityEquipmentPacket extends OutboundPacket{
 	/** @var Item */
 	public $item;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::ENTITY_EQUIPMENT_PACKET;
 	}
 

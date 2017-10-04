@@ -113,7 +113,7 @@ class Translator{
 	 * @return DataPacket|array<DataPacket>|null
 	 */
 	public function interfaceToServer(DesktopPlayer $player, Packet $packet){
-		switch($packet->pid()){
+		switch($packet->canonical()){
 			case InboundPacket::TELEPORT_CONFIRM_PACKET://Confirm
 				return null;
 
@@ -617,7 +617,7 @@ class Translator{
 
 			default:
 				if(\pocketmine\DEBUG > 3){
-					echo "[Receive][Translator] 0x".bin2hex(chr($packet->pid()))." Not implemented\n";
+					$player->getServer()->getLogger()->debug(sprintf("[Recv][Translator] %s Not implemented", $packet));
 				}
 				return null;
 		}
@@ -2000,7 +2000,7 @@ class Translator{
 
 			default:
 				if(\pocketmine\DEBUG > 3){
-					echo "[Send][Translator] 0x".bin2hex(chr($packet->pid()))." Not implemented\n";
+					$player->getServer()->getLogger()->debug(sprintf("[Send][Translator] %s Not implemented\n", $packet));
 				}
 				return null;
 		}

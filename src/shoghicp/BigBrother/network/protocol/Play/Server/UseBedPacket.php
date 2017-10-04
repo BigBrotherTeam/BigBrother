@@ -42,7 +42,7 @@ class UseBedPacket extends OutboundPacket{
 	/** @var int */
 	public $bedZ;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::USE_BED_PACKET;
 	}
 

@@ -40,7 +40,7 @@ class PlayerLookPacket extends InboundPacket{
 	/** @var bool */
 	public $onGround;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::PLAYER_LOOK_PACKET;
 	}
 

@@ -46,7 +46,7 @@ class UpdateBlockEntityPacket extends OutboundPacket{
 	/** @var Tag */
 	public $namedtag;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::UPDATE_BLOCK_ENTITY_PACKET;
 	}
 

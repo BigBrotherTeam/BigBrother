@@ -38,7 +38,7 @@ class TimeUpdatePacket extends OutboundPacket{
 	/** @var int */
 	public $time;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::TIME_UPDATE_PACKET;
 	}
 

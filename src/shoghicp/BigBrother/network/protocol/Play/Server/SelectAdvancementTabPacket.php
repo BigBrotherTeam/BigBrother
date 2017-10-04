@@ -38,7 +38,7 @@ class SelectAdvancementTabPacket extends OutboundPacket{
 	/** @var string */
 	public $tabId = "";
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::SELECT_ADVANCEMENT_TAB_PACKET;
 	}
 

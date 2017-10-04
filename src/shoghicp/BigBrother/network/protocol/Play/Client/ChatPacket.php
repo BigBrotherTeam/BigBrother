@@ -36,7 +36,7 @@ class ChatPacket extends InboundPacket{
 	/** @var string */
 	public $message;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::CHAT_PACKET;
 	}
 

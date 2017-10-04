@@ -37,10 +37,27 @@ use shoghicp\BigBrother\utils\ComputerItem;
 
 abstract class Packet extends \stdClass{
 
+	const MASK_PID      = 0x00ff;
+	const MASK_STATE    = 0xff00;
+
 	/** @var string */
 	protected $buffer;
 	/** @var int */
 	protected $offset = 0;
+
+	/** @var InboundPacket[][] */
+	private static $inboundPacketSkeltonMap = [
+		0x00 => [/* Login  */],
+		0x01 => [/* Play   */],
+		0xff => [/* Status */]
+	];
+
+	/** @var OutboundPacket[][] */
+	private static $outboundPacketSkeltonMap = [
+		0x00 => [/* Login  */],
+		0x01 => [/* Play   */],
+		0xff => [/* Status */]
+	];
 
 	protected function get($len) : string{
 		if($len < 0){
@@ -207,11 +224,84 @@ abstract class Packet extends \stdClass{
 		$this->buffer .= Binary::writeComputerVarInt($v);
 	}
 
-	public abstract function pid() : int;
+	public final static function pid() : int{
+		return static::canonical() & self::MASK_PID;
+	}
+
+	public final static function state() : int{
+		return (static::canonical() & self::MASK_STATE) >> 8;
+	}
+
+	protected abstract static function canonical() : int;
 
 	protected abstract function encode() : void;
 
 	protected abstract function decode() : void;
+
+	public static function init() : void{
+		$baseDir = join(DIRECTORY_SEPARATOR, [__DIR__, "protocol"]);
+		foreach(new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($baseDir)) as $file){
+			if(is_file($path = $file->getPathname())) {
+				require_once($path);
+			}
+		}
+
+		foreach(get_declared_classes() as $klass){
+			if(is_subclass_of($klass, self::class) and !(new \ReflectionClass($klass))->isAbstract()){
+				if(is_subclass_of($klass, InboundPacket::class)){
+					self::$inboundPacketSkeltonMap[$klass::state()][$klass::pid()] = new $klass;
+				}
+				if(is_subclass_of($klass, OutboundPacket::class)){
+					self::$outboundPacketSkeltonMap[$klass::state()][$klass::pid()] = new $klass;
+				}
+			}
+		}
+	}
+
+	/**
+	 * @param int    $pid
+	 * @param int    $state
+	 * @param string $buffer
+	 * @param int    $offset
+	 * @return InboundPacket|null new InboundPacket instance corresponding to $state and $pid if found else null
+	 */
+	public static function newInboundPacket(int $pid, int $state=-1, string $buffer=null, int $offset=0) : ?InboundPacket{
+		$instance = null;
+
+		if($state < 0){
+			$state = ($pid & self::MASK_STATE) >> 8;
+		}
+
+		if($skelton = self::$inboundPacketSkeltonMap[$state][$pid & self::MASK_PID] ?? false){
+			$instance = clone $skelton;
+			assert($instance instanceof Packet);
+			if($buffer !== null){
+				$instance->read($buffer, $offset);
+			}
+		}
+
+		return $instance;
+	}
+
+	/**
+	 * @param int    $pid
+	 * @param int    $state
+	 * @return OutboundPacket|null new OutboundPacket instance corresponding to $state and $pid if found else null
+	 */
+	public static function newOutboundPacket(int $pid, int $state=-1) : ?OutboundPacket{
+		$instance = null;
+
+		if($state < 0){
+			$state = ($pid & self::MASK_STATE) >> 8;
+		}
+
+		if($skelton = self::$outboundPacketSkeltonMap[$state][$pid & self::MASK_PID] ?? false){
+			$instance = clone $skelton;
+			assert($instance instanceof Packet);
+		}
+
+		return $instance;
+	}
 
 	public function write() : string{
 		$this->buffer = "";
@@ -224,5 +314,15 @@ abstract class Packet extends \stdClass{
 		$this->buffer = $buffer;
 		$this->offset = $offset;
 		$this->decode();
+	}
+
+	public function __toString() : string{
+		return sprintf(
+			"<Packet state='0x%02x' pid='0x%02x' flags='%s%s' class='%s'>",
+			self::state(), self::pid(),
+			$this instanceof InboundPacket ? "I" : " ",
+			$this instanceof OutboundPacket ? "O" : " ",
+			get_class($this)
+		);
 	}
 }

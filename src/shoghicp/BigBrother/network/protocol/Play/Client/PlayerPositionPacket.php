@@ -42,7 +42,7 @@ class PlayerPositionPacket extends InboundPacket{
 	/** @var bool */
 	public $onGround;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::PLAYER_POSITION_PACKET;
 	}
 

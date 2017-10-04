@@ -36,7 +36,7 @@ class DestroyEntitiesPacket extends OutboundPacket{
 	/** @var int[] */
 	public $ids = [];
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::DESTROY_ENTITIES_PACKET;
 	}
 

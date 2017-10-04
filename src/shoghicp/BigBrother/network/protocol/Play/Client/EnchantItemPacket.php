@@ -38,7 +38,7 @@ class EnchantItemPacket extends InboundPacket{
 	/** @var int */
 	public $enchantment;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::ENCHANT_ITEM_PACKET;
 	}
 

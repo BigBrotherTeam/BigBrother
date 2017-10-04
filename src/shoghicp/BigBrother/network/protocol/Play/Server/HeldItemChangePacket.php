@@ -36,7 +36,7 @@ class HeldItemChangePacket extends OutboundPacket{
 	/** @var int */
 	public $selectedSlot;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::HELD_ITEM_CHANGE_PACKET;
 	}
 

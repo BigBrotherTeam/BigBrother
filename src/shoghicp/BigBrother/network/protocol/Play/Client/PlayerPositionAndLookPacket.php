@@ -46,7 +46,7 @@ class PlayerPositionAndLookPacket extends InboundPacket{
 	/** @var bool */
 	public $onGround;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::PLAYER_POSITION_AND_LOOK_PACKET;
 	}
 

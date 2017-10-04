@@ -36,7 +36,7 @@ class EntityPacket extends OutboundPacket{
 	/** @var int */
 	public $eid;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::ENTITY_PACKET;
 	}
 

@@ -44,7 +44,7 @@ class BlockChangePacket extends OutboundPacket{
 	/** @var int */
 	public $blockMeta;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::BLOCK_CHANGE_PACKET;
 	}
 

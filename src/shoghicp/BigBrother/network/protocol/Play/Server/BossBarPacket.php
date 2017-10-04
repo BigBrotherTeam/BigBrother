@@ -54,7 +54,7 @@ class BossBarPacket extends OutboundPacket{
 	/** @var int */
 	public $flags;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::BOSS_BAR_PACKET;
 	}
 

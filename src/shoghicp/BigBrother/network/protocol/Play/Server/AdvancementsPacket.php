@@ -42,7 +42,7 @@ class AdvancementsPacket extends OutboundPacket{
 	/** @var array */
 	public $progress = [];
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::ADVANCEMENTS_PACKET;
 	}
 

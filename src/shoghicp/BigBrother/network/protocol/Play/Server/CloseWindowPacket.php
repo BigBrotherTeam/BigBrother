@@ -36,7 +36,7 @@ class CloseWindowPacket extends OutboundPacket{
 	/** @var int */
 	public $windowID;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::CLOSE_WINDOW_PACKET;
 	}
 

@@ -46,7 +46,7 @@ class TabCompletePacket extends InboundPacket{
 	/** @var int */
 	public $z;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::TAB_COMPLETE_PACKET;
 	}
 

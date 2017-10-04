@@ -38,7 +38,7 @@ class EntityStatusPacket extends OutboundPacket{
 	/** @var int */
 	public $status;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::ENTITY_STATUS_PACKET;
 	}
 

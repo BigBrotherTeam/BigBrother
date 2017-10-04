@@ -36,7 +36,7 @@ class ServerDifficultyPacket extends OutboundPacket{
 	/** @var int */
 	public $difficulty;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::SERVER_DIFFICULTY_PACKET;
 	}
 

@@ -46,7 +46,7 @@ class ClientSettingsPacket extends InboundPacket{
 	/** @var int */
 	public $mainHand;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::CLIENT_SETTINGS_PACKET;
 	}
 

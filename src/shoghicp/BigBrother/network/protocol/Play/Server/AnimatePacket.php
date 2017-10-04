@@ -38,7 +38,7 @@ class AnimatePacket extends OutboundPacket{
 	/** @var int */
 	public $actionID;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::ANIMATE_PACKET;
 	}
 

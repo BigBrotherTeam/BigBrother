@@ -38,7 +38,7 @@ class ChangeGameStatePacket extends OutboundPacket{
 	/** @var float */
 	public $value;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::CHANGE_GAME_STATE_PACKET;
 	}
 

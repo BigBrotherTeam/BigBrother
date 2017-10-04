@@ -50,7 +50,7 @@ class ExplosionPacket extends OutboundPacket{
 	/** @var float */
 	public $motionZ;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::EXPLOSION_PACKET;
 	}
 

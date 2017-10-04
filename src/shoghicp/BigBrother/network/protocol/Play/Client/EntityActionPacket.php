@@ -40,7 +40,7 @@ class EntityActionPacket extends InboundPacket{
 	/** @var int */
 	public $jumpboost;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::ENTITY_ACTION_PACKET;
 	}
 

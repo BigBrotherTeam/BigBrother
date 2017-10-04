@@ -36,7 +36,7 @@ class ClientStatusPacket extends InboundPacket{
 	/** @var int */
 	public $actionID;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::CLIENT_STATUS_PACKET;
 	}
 

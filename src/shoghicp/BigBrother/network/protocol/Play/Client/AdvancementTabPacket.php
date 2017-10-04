@@ -37,7 +37,7 @@ class AdvancementTabPacket extends InboundPacket{
 	public $status;
 	public $tabId;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::ADVANCEMENT_TAB_PACKET;
 	}
 

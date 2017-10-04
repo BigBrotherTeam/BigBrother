@@ -39,7 +39,7 @@ class WindowItemsPacket extends OutboundPacket{
 	/** @var Item[] */
 	public $items = [];
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::WINDOW_ITEMS_PACKET;
 	}
 

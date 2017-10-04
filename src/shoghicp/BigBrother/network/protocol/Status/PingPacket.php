@@ -36,8 +36,8 @@ class PingPacket extends Packet{
 	/** @var int */
 	public $time;
 
-	public function pid() : int{
-		return 0x01;
+	public static function canonical() : int{
+		return 0xff01;
 	}
 
 	protected function encode() : void{

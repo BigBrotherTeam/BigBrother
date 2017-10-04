@@ -40,7 +40,7 @@ class ConfirmTransactionPacket extends OutboundPacket{
 	/** @var bool */
 	public $accepted;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::CONFIRM_TRANSACTION_PACKET;
 	}
 

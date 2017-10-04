@@ -47,7 +47,7 @@ class ClickWindowPacket extends InboundPacket{
 	/** @var Item */
 	public $clickedItem;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::CLICK_WINDOW_PACKET;
 	}
 

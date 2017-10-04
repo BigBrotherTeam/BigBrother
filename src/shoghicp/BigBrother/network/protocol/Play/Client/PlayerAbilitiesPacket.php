@@ -47,7 +47,7 @@ class PlayerAbilitiesPacket extends InboundPacket{
 	/** @var float */
 	public $walkingSpeed;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::PLAYER_ABILITIES_PACKET;
 	}
 

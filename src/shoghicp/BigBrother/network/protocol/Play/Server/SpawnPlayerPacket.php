@@ -51,7 +51,7 @@ class SpawnPlayerPacket extends OutboundPacket{
 	/** @var array */
 	public $metadata;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::SPAWN_PLAYER_PACKET;
 	}
 

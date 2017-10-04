@@ -48,7 +48,7 @@ class NamedSoundEffectPacket extends OutboundPacket{
 	/** @var float */
 	public $pitch;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::NAMED_SOUND_EFFECT_PACKET;
 	}
 

@@ -48,7 +48,7 @@ class UseEntityPacket extends InboundPacket{
 	/** @var int */
 	public $hand;
 
-	public function pid() : int{
+	public static function canonical() : int{
 		return self::USE_ENTITY_PACKET;
 	}
 
