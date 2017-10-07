@@ -47,33 +47,34 @@ use shoghicp\BigBrother\network\protocol\Play\Server\OpenSignEditorPacket;
 use shoghicp\BigBrother\utils\ConvertUtils;
 use shoghicp\BigBrother\utils\AES;
 
-class BigBrother extends PluginBase implements Listener{
+final class BigBrother extends PluginBase implements Listener{
 
 	/** @var ProtocolInterface */
-	private $interface;
-
-	/** @var RSA */
-	protected $rsa;
-
-	/** @var string */
-	protected $privateKey;
-
-	/** @var string */
-	protected $publicKey;
-
-	/** @var bool */
-	protected $onlineMode;
+	private static $interface = null;
 
 	/** @var Translator */
-	protected $translator;
+	private static $translator = null;
 
 	/** @var DesktopPlayer[] */
-	protected static $playerList = [];
+	private static $playerList = [];
+
+	/** @var RSA */
+	private $rsa;
+
+	/** @var string */
+	private $privateKey;
+
+	/** @var string */
+	private $publicKey;
+
+	/** @var bool */
+	private $onlineMode;
 
 	/**
 	 * @override
 	 */
-	public function onEnable(){
+	public function onLoad(){
+
 		ConvertUtils::init();
 
 		$this->saveDefaultConfig();
@@ -98,7 +99,6 @@ class BigBrother extends PluginBase implements Listener{
 			break;
 		}
 
-
 		$this->rsa = new RSA();
 		switch(constant("CRYPT_RSA_MODE")){
 			case RSA::MODE_OPENSSL:
@@ -109,7 +109,12 @@ class BigBrother extends PluginBase implements Listener{
 				$this->getLogger()->info("Use phpseclib internal engine for RSA encryption.");
 			break;
 		}
+	}
 
+	/**
+	 * @override
+	 */
+	public function onEnable(){
 		if(!$this->getConfig()->exists("motd")){
 			$this->getLogger()->warning("No motd has been set. The server description will be empty.");
 			$this->getPluginLoader()->disablePlugin($this);
@@ -117,9 +122,10 @@ class BigBrother extends PluginBase implements Listener{
 		}
 
 		if(Info::CURRENT_PROTOCOL === 137){
-			$this->translator = new Translator();
-
 			$this->getServer()->getPluginManager()->registerEvents($this, $this);
+			if(self::$translator === null){
+				self::$translator = new Translator();
+			}
 
 			if($this->onlineMode){
 				$this->getLogger()->info("Server is being started in the background");
@@ -133,17 +139,10 @@ class BigBrother extends PluginBase implements Listener{
 				$this->rsa->loadKey($this->privateKey);
 			}
 
-			$this->getLogger()->info("Starting Minecraft: PC server on ".($this->getIp() === "0.0.0.0" ? "*" : $this->getIp()).":".$this->getPort()." version ".ServerManager::VERSION);
-
-			$disable = true;
-			foreach($this->getServer()->getNetwork()->getInterfaces() as $interface){
-				if($interface instanceof ProtocolInterface){
-					$disable = false;
-				}
-			}
-			if($disable){
-				$this->interface = new ProtocolInterface($this, $this->getServer(), $this->translator, $this->getConfig()->get("network-compression-threshold"));
-				$this->getServer()->getNetwork()->registerInterface($this->interface);
+			if(self::$interface === null){
+				$this->getLogger()->info("Starting Minecraft: PC server on ".($this->getIp() === "0.0.0.0" ? "*" : $this->getIp()).":".$this->getPort()." version ".ServerManager::VERSION);
+				self::$interface = new ProtocolInterface($this, $this->getServer(), self::$translator, $this->getConfig()->get("network-compression-threshold"));
+				$this->getServer()->getNetwork()->registerInterface(self::$interface);
 			}
 		}else{
 			$this->getLogger()->critical("Couldn't find a protocol translator for #".Info::CURRENT_PROTOCOL .", disabling plugin");
