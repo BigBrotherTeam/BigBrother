@@ -1,0 +1,51 @@
+{
+	"name": "bigbrother-team/bigbrother",
+	"description": "Allows the connection of Minecraft: PC clients to PocketMine-MP servers",
+	"type": "pmmp-plugin",
+	"homepage": "https://github.com/BigBrotherTeam/BigBrother",
+	"license": "LGPL-3.0",
+	"authors": [
+		{
+			"name": "hmy2001",
+			"email": "harutowii@yahoo.co.jp",
+			"role": "Lead Developper"
+		},
+		{
+			"name": "eternalharvest",
+			"email": "takuya@tuntunkun.com",
+			"role": "Developper"
+		},
+		{
+			"name": "SuperMaXAleX",
+			"email": "marielolo93@gmail.com",
+			"role": "Developper"
+		},
+		{
+			"name": "caspervanneck",
+			"email": "wesleyvanneck1012@gmail.com",
+			"role": "Developper"
+		},
+		{
+			"name": "DrewD3V",
+			"email": "ytapplegamer@gmail.com",
+			"role": "Developper"
+		}
+	],
+	"scripts": {
+		"build": [
+			"@composer install --no-dev -o",
+			"@php contrib/build"
+		]
+	},
+	"require": {
+		"php": ">=7.1",
+		"phpseclib/phpseclib": "2.0.6",
+		"ext-phar": "*",
+		"ext-json": "*"
+	},
+	"autoload": {
+		"psr-0": {
+			"shoghicp\\BigBrother\\": ["src"]
+		}
+	}
+}

@@ -82,6 +82,16 @@ class BigBrother extends PluginBase implements Listener{
 
 		$this->onlineMode = (bool) $this->getConfig()->get("online-mode");
 
+		if(is_file($composer = $this->getFile() . "/vendor/autoload.php")){
+			$this->getLogger()->info("Registering Composer autoloader...");
+			require_once($composer);
+		}else{
+			$this->getLogger()->critical("Composer autoloader not found");
+			$this->getLogger()->critical("Please initialize composer dependencies before running");
+			$this->getPluginLoader()->disablePlugin($this);
+			return;
+		}
+
 		$aes = new AES();
 		switch($aes->getEngine()){
 			case AES::ENGINE_OPENSSL:
