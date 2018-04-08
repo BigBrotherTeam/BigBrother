@@ -584,7 +584,7 @@ class DesktopPlayer extends Player{
 		$profile = null;
 		$info = null;
 
-		$response = Utils::getURL("https://api.mojang.com/users/profiles/minecraft/".$username);
+		$response = Utils::getURL("https://api.mojang.com/users/profiles/minecraft/".urlencode($username));
 		if($response !== false){
 			$profile = json_decode($response, true);
 		}
@@ -613,7 +613,7 @@ class DesktopPlayer extends Player{
 	public function getAuthenticateOnline(string $username, string $hash) : void{
 		$result = null;
 
-		$response = Utils::getURL("https://sessionserver.mojang.com/session/minecraft/hasJoined?username=".$username."&serverId=".$hash, 5);
+		$response = Utils::getURL("https://sessionserver.mojang.com/session/minecraft/hasJoined?username=".urlencode($username)."&serverId=".$hash, 5);
 		if($response !== false){
 			$result = json_decode($response, true);
 		}
