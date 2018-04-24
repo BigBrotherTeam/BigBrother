@@ -708,7 +708,7 @@ class ConvertUtils{
 
 		foreach($olddata as $bottom => $d){
 			switch($bottom){
-				case Human::DATA_FLAGS://Flags
+				case Human::DATA_FLAGS: //Flags
 					$flags = 0;
 
 					if(((int) $d[1] & (1 << Human::DATA_FLAG_ONFIRE)) > 0){
@@ -745,13 +745,13 @@ class ConvertUtils{
 
 					$newdata[0] = [0, $flags];
 				break;
-				case Human::DATA_AIR://Air
+				case Human::DATA_AIR: //Air
 					$newdata[1] = [1, $d[1]];
 				break;
-				case Human::DATA_NAMETAG://Custom name
+				case Human::DATA_NAMETAG: //Custom name
 					$newdata[2] = [3, str_replace("\n", "", $d[1])];//TODO
 				break;
-				case Human::DATA_FUSE_LENGTH://TNT
+				case Human::DATA_FUSE_LENGTH: //TNT
 					$newdata[6] = [1, $d[1]];
 				break;
 				case Human::DATA_POTION_COLOR:
@@ -760,15 +760,29 @@ class ConvertUtils{
 				case Human::DATA_POTION_AMBIENT:
 					$newdata[9] = [6, $d[1] ? true : false];
 				break;
+				// try fixing DATA_BOUNDING_BOX_HEIGHT and DATA_BOUNDING_BOX_WIDTH
 				case Human::DATA_VARIANT:
+				break;
 				case Human::DATA_PLAYER_FLAGS:
+				break;
 				case Human::DATA_PLAYER_BED_POSITION:
+				break;
 				case Human::DATA_LEAD_HOLDER_EID:
+				break;
 				case Human::DATA_SCALE:
+				break;
 				case Human::DATA_MAX_AIR:
+				break;
 				case Human::DATA_OWNER_EID:
+				break;
 				case Human::DATA_BOUNDING_BOX_WIDTH:
+					//welp
+					$newdata[53] = [2, $d[1] ? float : 2.0];
+				break;
 				case Human::DATA_BOUNDING_BOX_HEIGHT:
+					//welp
+					$newdata[54] = [2, $d[1] ? float : 1.0];
+				break;
 				case Projectile::DATA_SHOOTER_ID:
 					//Unused
 				break;
