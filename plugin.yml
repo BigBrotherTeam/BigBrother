@@ -5,4 +5,5 @@ author: BigBrotherTeam
 version: 1.6.0-beta
 api: [3.7.0]
 description: "Allows the connection of Minecraft: PC clients to PocketMine-MP servers"
+author: BigBrotherTeam
 website: https://github.com/BigBrotherTeam/BigBrother

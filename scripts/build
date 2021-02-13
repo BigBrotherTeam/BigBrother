@@ -35,7 +35,7 @@ define("GITHUB_API", "https://api.github.com/repos/%s/releases");
 define("USER_AGENT", "User-Agent: Mozilla/5.0 like Gecko");
 
 $include_dirs  = ['src', 'resources', 'vendor'];
-$include_files = ['LICENSE', 'README.md', 'plugin.yml'];
+$include_files = ['LICENSE', 'README.md'];
 
 try {
 	if(ini_get("phar.readonly") == 1){
@@ -45,8 +45,8 @@ try {
 
 	@unlink(PROJECT_ROOT . REVISION_FILE);
 	@exec("git describe --tags --always --dirty", $revision, $value);
-	if($value == 0){
-		file_put_contents(PROJECT_ROOT . REVISION_FILE, $revision[0]);
+	if($revision = $value == 0 ? $revision[0] : null){
+		file_put_contents(PROJECT_ROOT . REVISION_FILE, $revision);
 	}
 
 	/**
@@ -78,13 +78,10 @@ try {
 			mkdir(dirname(PROJECT_ROOT . DEVTOOL_FILE));
 			echo sprintf("Downloading DevTools from '%s'", $asset->browser_download_url) . PHP_EOL;
 
-			$binary = file_get_contents($asset->browser_download_url);
-			if($binary === false){
+			if(!copy($asset->browser_download_url, PROJECT_ROOT . DEVTOOL_FILE)){
 				echo "Failed to download DevTools.phar" . PHP_EOL;
 				exit(1);
 			}
-
-			file_put_contents(PROJECT_ROOT . DEVTOOL_FILE, $binary);
 		}
 	}
 
@@ -101,11 +98,15 @@ try {
 	system($command);
 
 	$phar = new Phar(PROJECT_ROOT . BIGBROS_FILE);
+	if($revision){
+		$phar->addFromString('plugin.yml', preg_replace('/^version:.*$/m', "version: $revision", file_get_contents(PROJECT_ROOT . '/plugin.yml')));
+	}
+
 	foreach ($include_files as $file){
 		$phar->addFile(PROJECT_ROOT . '/' . $file, $file);
 	}
 }catch(Exception $e){
 	echo "unexpected error has occurred!" . PHP_EOL;
-	echo $e->getTraceAsString() . PHP_EOL;
+	echo $e . PHP_EOL;
 	exit(1);
 }
