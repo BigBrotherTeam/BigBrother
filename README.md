@@ -7,6 +7,11 @@ BigBrother
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/BigBrotherTeam/BigBrother.svg)](http://isitmaintained.com/project/BigBrotherTeam/BigBrother "Average time to resolve an issue")
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/BigBrotherTeam/BigBrother.svg)](http://isitmaintained.com/project/BigBrotherTeam/BigBrother "Percentage of issues still open")
 
+### I (lovetwice1012) am working on making this plugin compatible with the current protocol.
+### Lint can be found [here](https://poggit.pmmp.io/ci/lovetwice1012/BigBrother-1/BigBrother-1/).
+### If you want to help me revive this plugin, please send me a pull request.
+-------------
+
 Welcome to BigBrother, a [shoghicp project that was abandoned](https://github.com/shoghicp/bigbrother) and taken back by the BigBrotherTeam!
 -------------
 

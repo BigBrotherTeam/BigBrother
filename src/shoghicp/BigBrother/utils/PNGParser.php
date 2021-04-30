@@ -73,7 +73,7 @@ class PNGParser{
 	private function read(){
 		if($this->stream->get(8) !== self::PNGFileSignature){
 			$this->stream->reset();
-			echo "Error\n";
+			//echo "Error\n";
 			return;
 		}
 
@@ -155,8 +155,8 @@ class PNGParser{
 				}
 			break;
 			default:
-				echo "Sorry, i can't parse png file. readtRNS: ".$this->colorType."\n";
-				echo "Report to BigBrotherTeam!\n";
+				//echo "Sorry, i can't parse png file. readtRNS: ".$this->colorType."\n";
+				//echo "Report to BigBrotherTeam!\n";
 			break;
 		}
 	}
@@ -266,8 +266,8 @@ class PNGParser{
 			case 16:
 				return $stream->getShort();
 			default:
-				echo "Sorry, i can't parse png file. getData: ".$this->bitDepth."\n";
-				echo "Report to BigBrotherTeam!\n";
+				//echo "Sorry, i can't parse png file. getData: ".$this->bitDepth."\n";
+				//echo "Report to BigBrotherTeam!\n";
 			break;
 		}
 

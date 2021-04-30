@@ -265,7 +265,7 @@ class InventoryUtils{
 				$title = "repair";
 			break;
 			default://TODO: http://wiki.vg/Inventory#Windows
-				echo "[InventoryUtils] ContainerOpenPacket: ".$packet->type."\n";
+				//echo "[InventoryUtils] ContainerOpenPacket: ".$packet->type."\n";
 
 				$pk = new ContainerClosePacket();
 				$pk->windowId = $packet->windowId;
@@ -390,7 +390,7 @@ class InventoryUtils{
 
 					return $pk;
 				}
-				echo "[InventoryUtils] InventorySlotPacket: 0x".bin2hex(chr($packet->windowId))."\n";
+				//echo "[InventoryUtils] InventorySlotPacket: 0x".bin2hex(chr($packet->windowId))."\n";
 			break;
 		}
 		return null;
@@ -402,7 +402,7 @@ class InventoryUtils{
 	 */
 	public function onWindowSetData(ContainerSetDataPacket $packet) : array{
 		if(!isset($this->windowInfo[$packet->windowId])){
-			echo "[InventoryUtils] ContainerSetDataPacket: 0x".bin2hex(chr($packet->windowId))."\n";
+			//echo "[InventoryUtils] ContainerSetDataPacket: 0x".bin2hex(chr($packet->windowId))."\n";
 		}
 
 		$packets = [];
@@ -436,12 +436,12 @@ class InventoryUtils{
 						$packets[] = $pk;
 					break;
 					default:
-						echo "[InventoryUtils] ContainerSetDataPacket: 0x".bin2hex(chr($packet->windowId))."\n";
+						//echo "[InventoryUtils] ContainerSetDataPacket: 0x".bin2hex(chr($packet->windowId))."\n";
 					break;
 				}
 			break;
 			default:
-				echo "[InventoryUtils] ContainerSetDataPacket: 0x".bin2hex(chr($packet->windowId))."\n";
+				//echo "[InventoryUtils] ContainerSetDataPacket: 0x".bin2hex(chr($packet->windowId))."\n";
 			break;
 		}
 
@@ -528,7 +528,7 @@ class InventoryUtils{
 
 					$packets[] = $pk;
 				}else{
-					echo "[InventoryUtils] InventoryContentPacket: 0x".bin2hex(chr($packet->windowId))."\n";
+					//echo "[InventoryUtils] InventoryContentPacket: 0x".bin2hex(chr($packet->windowId))."\n";
 				}
 			break;
 		}
@@ -602,7 +602,7 @@ class InventoryUtils{
 						}
 					break;
 					default:
-						echo "[InventoryUtils] UnknownButtonType: ".$packet->mode." : ".$packet->button."\n";
+						//echo "[InventoryUtils] UnknownButtonType: ".$packet->mode." : ".$packet->button."\n";
 					break;
 				}
 			break;
@@ -613,7 +613,7 @@ class InventoryUtils{
 
 					break;
 					default:
-						echo "[InventoryUtils] UnknownButtonType: ".$packet->mode." : ".$packet->button."\n";
+						//echo "[InventoryUtils] UnknownButtonType: ".$packet->mode." : ".$packet->button."\n";
 					break;
 				}
 			break;
@@ -638,17 +638,17 @@ class InventoryUtils{
 						}
 					break;
 					default:
-						echo "[InventoryUtils] UnknownButtonType: ".$packet->mode." : ".$packet->button."\n";
+						//echo "[InventoryUtils] UnknownButtonType: ".$packet->mode." : ".$packet->button."\n";
 					break;
 				}
 			break;
 			case 3:
 				switch($packet->button){
 					case 2://Middle click
-						echo "middle\n";
+						//echo "middle\n";
 					break;
 					default:
-						echo "[InventoryUtils] UnknownButtonType: ".$packet->mode." : ".$packet->button."\n";
+						//echo "[InventoryUtils] UnknownButtonType: ".$packet->mode." : ".$packet->button."\n";
 					break;
 				}
 			break;
@@ -677,7 +677,7 @@ class InventoryUtils{
 						}
 					break;
 					default:
-						echo "[InventoryUtils] UnknownButtonType: ".$packet->mode." : ".$packet->button."\n";
+						//echo "[InventoryUtils] UnknownButtonType: ".$packet->mode." : ".$packet->button."\n";
 					break;
 				}
 			break;
@@ -693,13 +693,13 @@ class InventoryUtils{
 
 					break;
 					case 4://Starting right mouse drag
-						echo "start\n";
+						//echo "start\n";
 					break;
 					case 5://Add slot for right-mouse drag
-						echo "add slot\n";
+						//echo "add slot\n";
 					break;
 					case 6://Ending right mouse drag
-						echo "end\n";
+						//echo "end\n";
 					break;
 					case 8://Starting middle mouse drag
 
@@ -711,7 +711,7 @@ class InventoryUtils{
 
 					break;
 					default:
-						echo "[InventoryUtils] UnknownButtonType: ".$packet->mode." : ".$packet->button."\n";
+						//echo "[InventoryUtils] UnknownButtonType: ".$packet->mode." : ".$packet->button."\n";
 					break;
 				}
 			break;
@@ -721,12 +721,12 @@ class InventoryUtils{
 
 					break;
 					default:
-						echo "[InventoryUtils] UnknownButtonType: ".$packet->mode." : ".$packet->button."\n";
+						//echo "[InventoryUtils] UnknownButtonType: ".$packet->mode." : ".$packet->button."\n";
 					break;
 				}
 			break;
 			default:
-				echo "[InventoryUtils] ClickWindowPacket: ".$packet->mode."\n";
+				//echo "[InventoryUtils] ClickWindowPacket: ".$packet->mode."\n";
 			break;
 		}
 
@@ -1035,7 +1035,7 @@ class InventoryUtils{
 	 */
 	public function onCraft(int $windowId) : void{
 		if($windowId !== 0 and $windowId !== 127){
-			echo "[InventoryUtils][Debug] called onCraft\n";
+			//echo "[InventoryUtils][Debug] called onCraft\n";
 			return;
 		}
 
@@ -1134,13 +1134,13 @@ class InventoryUtils{
 			if($action === null){
 				$errors++;
 				if(DEBUG > 3){
-					echo "[Action Number #".$actionNumber."] error action!\n";
+					//echo "[Action Number #".$actionNumber."] error action!\n";
 				}
 				continue;
 			}
 
 			if(DEBUG > 3){
-				echo "[Action Number #".$actionNumber."] error nothing!\n";
+				//echo "[Action Number #".$actionNumber."] error nothing!\n";
 			}
 
 			$actions[] = $action;
@@ -1155,11 +1155,11 @@ class InventoryUtils{
 
 			if($action->isValid($this->player)){
 				if(DEBUG > 3){
-					echo "[Action Number #".$actionNumber."][Window Name: ".$windowName."] error nothing!\n";
+					//echo "[Action Number #".$actionNumber."][Window Name: ".$windowName."] error nothing!\n";
 				}
 			}else{
 				if(DEBUG > 3){
-					echo "[Action Number #".$actionNumber."][Window Name: ".$windowName."] invalid Item!\n";
+					//echo "[Action Number #".$actionNumber."][Window Name: ".$windowName."] invalid Item!\n";
 					if($action instanceof SlotChangeAction){
 						$checkItem = $action->getInventory()->getItem($action->getSlot());
 						var_dump(["checkItem" => $checkItem, "sourceItem" => $action->getSourceItem()]);//json_encode

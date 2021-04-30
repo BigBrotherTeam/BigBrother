@@ -701,7 +701,7 @@ class ConvertUtils{
 					//Unused
 				break;
 				default:
-					echo "key: ".$bottom." Not implemented\n";
+					//echo "key: ".$bottom." Not implemented\n";
 				break;
 				//TODO: add data type
 			}
@@ -786,22 +786,6 @@ class ConvertUtils{
 		}
 
 		return $cloneBlockEntity;
-	}
-
-}
-
-
-class ComputerItem extends Item{
-	/**
-	 * @param int                $id
-	 * @param int                $meta
-	 * @param int                $count
-	 * @param CompoundTag|string $tag
-	 */
-	public function __construct(int $id = 0, int $meta = 0, int $count = 1, $tag = ""){
-		parent::__construct($id, $meta);
-		$this->setCount($count);
-		$this->setCompoundTag($tag);
 	}
 
 }

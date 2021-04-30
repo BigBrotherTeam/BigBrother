@@ -83,7 +83,7 @@ class PlayerListPacket extends OutboundPacket{
 					$this->put($player[0]);//UUID
 					break;
 				default:
-					echo "PlayerListPacket: ".$this->actionID."\n";
+					//echo "PlayerListPacket: ".$this->actionID."\n";
 					break;
 			}
 		}

@@ -176,7 +176,7 @@ class ProtocolInterface implements SourceInterface{
 		if(DEBUG > 4){
 			$id = bin2hex(chr($packet->pid()));
 			if($id !== "1f"){
-				echo "[Send][Interface] 0x".bin2hex(chr($packet->pid()))."\n";
+				//echo "[Send][Interface] 0x".bin2hex(chr($packet->pid()))."\n";
 			}
 		}
 
@@ -273,7 +273,7 @@ class ProtocolInterface implements SourceInterface{
 		if(DEBUG > 4){
 			$id = bin2hex(chr(ord($payload[0])));
 			if($id !== "0b"){//KeepAlivePacket
-				echo "[Receive][Interface] 0x".bin2hex(chr(ord($payload[0])))."\n";
+				//echo "[Receive][Interface] 0x".bin2hex(chr(ord($payload[0])))."\n";
 			}
 		}
 
@@ -370,7 +370,7 @@ class ProtocolInterface implements SourceInterface{
 					break;
 				default:
 					if(DEBUG > 4){
-						echo "[Receive][Interface] 0x".bin2hex(chr($pid))." Not implemented\n"; //Debug
+						//echo "[Receive][Interface] 0x".bin2hex(chr($pid))." Not implemented\n"; //Debug
 					}
 					return;
 			}

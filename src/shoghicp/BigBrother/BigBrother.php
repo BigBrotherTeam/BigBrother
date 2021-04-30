@@ -87,7 +87,7 @@ class BigBrother extends PluginBase implements Listener{
 		}
 
 		if($enable){
-			if(Info::CURRENT_PROTOCOL === 422){
+			//if(Info::CURRENT_PROTOCOL === 422){
 				ConvertUtils::init();
 
 				$this->saveDefaultConfig();
@@ -183,10 +183,12 @@ class BigBrother extends PluginBase implements Listener{
 				$this->translator = new Translator();
 				$this->interface = new ProtocolInterface($this, $this->getServer(), $this->translator, (int) $this->getConfig()->get("network-compression-threshold"));
 				$this->getServer()->getNetwork()->registerInterface($this->interface);
+			/*
 			}else{
 				$this->getLogger()->critical("Couldn't find a protocol translator for #".Info::CURRENT_PROTOCOL .", disabling plugin");
 				$this->getServer()->getPluginManager()->disablePlugin($this);
 			}
+			*/
 		}
 	}
 
@@ -252,7 +254,7 @@ class BigBrother extends PluginBase implements Listener{
 
 	/**
 	 * @param string $username
-	 * @param array profile
+	 * @param array $profile
 	 */
 	public function setProfileCache(string $username, array $profile) : void{
 		$this->profileCache[$username] = [
