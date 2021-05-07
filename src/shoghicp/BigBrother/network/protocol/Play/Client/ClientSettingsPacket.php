@@ -39,9 +39,9 @@ class ClientSettingsPacket extends InboundPacket{
 	public $viewDistance;
 	/** @var int */
 	public $chatMode;
-	/** @var int */
+	/** @var bool */
 	public $chatColors;
-	/** @var string */
+	/** @var int */
 	public $displayedSkinParts;
 	/** @var int */
 	public $mainHand;

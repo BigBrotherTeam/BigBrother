@@ -77,7 +77,7 @@ abstract class OutboundPacket extends Packet{
 	//TODO ENTITY_POSITION_AND_ROTATION_PACKET = 0x28;
 	const ENTITY_ROTATION_PACKET = 0x29;
 	const ENTITY_MOVEMENT_PACKET = 0x2a;
-	//TODO VEHICLE_MOVE_PACKET = 0x2b;
+	//const VEHICLE_MOVE_PACKET = 0x2b;//TODO VEHICLE_MOVE_PACKET = 0x2b;
 	//TODO OPEN_BOOK_PACKET = 0x2c;
 	const OPEN_WINDOW_PACKET = 0x2d;
 	const OPEN_SIGN_EDITOR_PACKET = 0x2e;
@@ -136,7 +136,7 @@ abstract class OutboundPacket extends Packet{
 
 	/**
 	 * @deprecated
-	 * @throws
+	 * @throws ErrorException
 	 */
 	protected final function decode() : void{
 		throw new ErrorException(get_class($this) . " is subclass of OutboundPacket: don't call decode() method");

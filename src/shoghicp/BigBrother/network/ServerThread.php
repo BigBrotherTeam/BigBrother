@@ -115,6 +115,7 @@ class ServerThread extends Thread{
 
 	/**
 	 * @param array            &$loadPaths
+	 * @phpstan-param array     $loadPaths
 	 * @param ReflectionClass $dep
 	 */
 	protected function addDependency(array &$loadPaths, ReflectionClass $dep){

@@ -29,10 +29,12 @@ declare(strict_types=1);
 
 namespace shoghicp\BigBrother\network;
 
+use pocketmine\item\Durable;
 use pocketmine\item\Item;
+use pocketmine\utils\UUID;
 use shoghicp\BigBrother\utils\Binary;
-use shoghicp\BigBrother\utils\ConvertUtils;
 use shoghicp\BigBrother\utils\ComputerItem;
+use shoghicp\BigBrother\utils\ConvertUtils;
 use stdClass;
 
 abstract class Packet extends stdClass{
@@ -86,16 +88,27 @@ abstract class Packet extends stdClass{
 	 * @return Item
 	 */
 	protected function getSlot() : Item{
-		$itemId = $this->getSignedShort();
-		if($itemId === -1){ //Empty
+		$hasItem = $this->getBool();
+		if($hasItem === false){ //Empty
 			return Item::get(Item::AIR, 0, 0);
 		}else{
-			$count = $this->getSignedByte();
-			$damage = $this->getSignedShort();
-			$nbt = $this->get(true);
 
-			$itemNBT = ConvertUtils::convertNBTDataFromPCtoPE($nbt);
-			$item = new ComputerItem($itemId, $damage, $count, $itemNBT);
+			$id = $this->getVarInt();
+			$count = $this->getByte();//count or damage
+			$nbt = $this->get(true);//getNbt
+
+			var_dump($id.",".$count);
+
+			$item = new ComputerItem($id);
+			if($item instanceof Durable){
+				$item->setDamage($count);
+			}else{
+				$item->setCount($count);
+			}
+
+			//$itemNBT = ConvertUtils::convertNBTDataFromPCtoPE($nbt);
+			//var_dump($itemNBT);
+			//$item->setCompoundTag($itemNBT);
 
 			ConvertUtils::convertItemData(false, $item);
 
@@ -242,6 +255,13 @@ abstract class Packet extends stdClass{
 		$this->buffer = $buffer;
 		$this->offset = $offset;
 		$this->decode();
+	}
+
+	public function putUUID(UUID $uuid){
+		$parts = $uuid->getParts();
+
+		$this->putLong(($parts[0] << 32) | $parts[1]);
+		$this->putLong(($parts[1] << 32) | $parts[2]);
 	}
 
 }

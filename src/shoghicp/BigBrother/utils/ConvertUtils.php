@@ -482,8 +482,9 @@ class ConvertUtils{
 	 *
 	 * @param bool $isComputer
 	 * @param Item &$item
+	 * @phpstan-param Item $item
 	 */
-	public static function convertItemData(bool $isComputer, Item &$item) : void{
+	public static function convertItemData(bool $isComputer, Item &$item) : void{//TODO: change return item
 		self::$timingConvertItem->startTiming();
 
 		$itemId = $item->getId();
@@ -609,6 +610,8 @@ class ConvertUtils{
 	 * @param bool $isComputer
 	 * @param int  &$blockId to convert
 	 * @param int  &$blockData to convert
+	 * @phpstan-param int $blockId
+	 * @phpstan-param int $blockData
 	 */
 	public static function convertBlockData(bool $isComputer, int &$blockId, int &$blockData) : void{
 		self::$timingConvertBlock->startTiming();
@@ -677,7 +680,7 @@ class ConvertUtils{
 					}
 
 					if(((int) $d[1] & (1 << Human::DATA_FLAG_CAN_SHOW_NAMETAG)) > 0){
-						$newData[3] = [7, true];
+						$newData[3] = [7, true];//
 					}
 
 					if(((int) $d[1] & (1 << Human::DATA_FLAG_ALWAYS_SHOW_NAMETAG)) > 0){
@@ -698,7 +701,12 @@ class ConvertUtils{
 					$newData[1] = [1, $d[1]];
 				break;
 				case Human::DATA_NAMETAG://Custom name
-					$newData[2] = [5, [true, BigBrother::toJSONInternal(str_replace("\n", "", $d[1]))]];//TODO
+					$nametag = str_replace("\n", "", $d[1]);
+					if($nametag === ""){
+						$newData[2] = [5, [false]];
+					}else{
+						$newData[2] = [5, [true, BigBrother::toJSONInternal($nametag)]];//TODO
+					}
 				break;
 				case Human::DATA_FUSE_LENGTH://TNT
 					$newData[6] = [1, $d[1]];
@@ -746,6 +754,7 @@ class ConvertUtils{
 	 * Why Mojang change the directions??
 	 *
 	 * @param int &$blockData
+	 * @phpstan-param int $blockData
 	 *
 	 * #blamemojang
 	 */
@@ -771,6 +780,7 @@ class ConvertUtils{
 	 * Why Mojang change the directions??
 	 *
 	 * @param int &$blockData
+	 * @phpstan-param int $blockData
 	 *
 	 * #blamemojang
 	 */

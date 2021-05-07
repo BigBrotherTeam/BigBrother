@@ -71,7 +71,7 @@ class ParticlePacket extends OutboundPacket{
 		$this->putFloat($this->offsetZ);
 		$this->putFloat($this->particleData);
 		$this->putInt($this->particleCount);
-		$this->put($this->data);//TODO: なんとかする
+		$this->put($this->data);//TODO: なんとかする // .= ?????????????????
 	}
 
 }

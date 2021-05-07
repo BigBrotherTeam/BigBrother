@@ -55,7 +55,6 @@ abstract class InboundPacket extends Packet{
 	const PLAYER_POSITION_AND_ROTATION_PACKET = 0x13;
 	const PLAYER_ROTATION_PACKET = 0x14;
 	const PLAYER_MOVEMENT_PACKET = 0x15;
-	//TODO VEHICLE_MOVE_PACKET = 0x16;
 	//TODO STEER_BOAT_PACKET = 0x17;
 	//TODO PICK_ITEM_PACKET = 0x18;
 	const CRAFT_RECIPE_REQUEST_PACKET = 0x19;
@@ -74,7 +73,8 @@ abstract class InboundPacket extends Packet{
 	//TODO UPDATE COMMAND_BLOCK_PACKET = 0x26;
 	//TODO UPDATE COMMAND_BLOCK_MINECRAFT_PACKET = 0x27;
 	//TODO UPDATE_JIGSAW_BLOCK_PACKET = 0x28;
-	const CREATIVE_INVENTORY_ACTION_PACKET = 0x29;
+	const CREATIVE_INVENTORY_ACTION_PACKET = 0x28;
+	//29...?
 	//TODO UPDATE_STRUCTURE_BLOCK_PACKET = 0x2a;
 	const UPDATE_SIGN_PACKET = 0x2b;
 	const ANIMATION_PACKET = 0x2c;
@@ -90,7 +90,7 @@ abstract class InboundPacket extends Packet{
 
 	/**
 	 * @deprecated
-	 * @throws
+	 * @throws ErrorException
 	 */
 	protected final function encode() : void{
 		throw new ErrorException(get_class($this) . " is subclass of InboundPacket: don't call encode() method");

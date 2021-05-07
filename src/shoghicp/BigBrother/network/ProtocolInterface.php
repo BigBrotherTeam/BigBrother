@@ -82,7 +82,10 @@ class ProtocolInterface implements SourceInterface{
 	/** @var ServerThread */
 	protected $thread;
 
-	/** @var SplObjectStorage<int> */
+	/**
+	 * @var SplObjectStorage<int>
+	 *	@phpstan-var SplObjectStorage<int>|SplObjectStorage
+	 */
 	protected $sessions;
 
 	/** @var DesktopPlayer[] */
@@ -96,7 +99,7 @@ class ProtocolInterface implements SourceInterface{
 	 * @param Server     $server
 	 * @param Translator $translator
 	 * @param int        $threshold
-	 * @throws
+	 * @throws Exception
 	 */
 	public function __construct(BigBrother $plugin, Server $server, Translator $translator, int $threshold){
 		$this->plugin = $plugin;

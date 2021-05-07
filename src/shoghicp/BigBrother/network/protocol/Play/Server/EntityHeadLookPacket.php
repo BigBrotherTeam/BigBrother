@@ -35,7 +35,7 @@ class EntityHeadLookPacket extends OutboundPacket{
 
 	/** @var int */
 	public $entityId;
-	/** @var int */
+	/** @var float */
 	public $yaw;
 
 	public function pid() : int{

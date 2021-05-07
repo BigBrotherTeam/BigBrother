@@ -74,7 +74,6 @@ class ItemFrameBlockEntity extends Position{
 	 * @param int   $y
 	 * @param int   $z
 	 * @param int   $data
-	 * @throws
 	 */
 	private function __construct(Level $level, int $x, int $y, int $z, int $data){
 		parent::__construct($x, $y, $z, $level);

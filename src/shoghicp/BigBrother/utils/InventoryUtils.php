@@ -30,6 +30,10 @@ declare(strict_types=1);
 namespace shoghicp\BigBrother\utils;
 
 use InvalidArgumentException;
+use pocketmine\item\ItemFactory;
+use pocketmine\network\mcpe\protocol\types\inventory\ItemStackWrapper;
+use pocketmine\network\mcpe\protocol\types\inventory\NormalTransactionData;
+use pocketmine\utils\BinaryStream;
 use const pocketmine\DEBUG;
 use pocketmine\inventory\ShapedRecipe;
 use pocketmine\inventory\ShapelessRecipe;
@@ -56,6 +60,8 @@ use pocketmine\tile\EnderChest as TileEnderChest;
 use pocketmine\tile\Tile;
 
 use ReflectionClass;
+use ReflectionException;
+use UnexpectedValueException;
 use shoghicp\BigBrother\DesktopPlayer;
 use shoghicp\BigBrother\network\OutboundPacket;
 use shoghicp\BigBrother\network\protocol\Play\Server\WindowConfirmationPacket;
@@ -139,7 +145,7 @@ class InventoryUtils{
 	 * @param int $inventorySlot
 	 * @param int|null $targetWindowId
 	 * @param int|null $targetInventorySlot
-	 * @return Item&
+	 * @return Item reference(&)
 	 */
 	private function &getItemAndSlot(int $windowId, int $inventorySlot, int &$targetWindowId = null, int &$targetInventorySlot = null) : Item{
 		$targetInventorySlot = $inventorySlot;
@@ -295,7 +301,7 @@ class InventoryUtils{
 
 		$pk = new OpenWindowPacket();
 		$pk->windowId = $packet->windowId;
-		$pk->inventoryType = $type;
+		$pk->inventoryType = $type;//
 		$pk->windowTitle = json_encode(["translate" => "container.".$title]);
 
 		$this->windowInfo[$packet->windowId] = ["type" => $packet->type, "slots" => $saveSlots, "items" => []];
@@ -838,8 +844,8 @@ class InventoryUtils{
 
 		$pk = null;
 		if($accepted){
-			$pk = new InventoryTransactionPacket();
-			$pk->transactionType = InventoryTransactionPacket::TYPE_NORMAL;
+			/** @var NetworkInventoryAction[] $actions */
+			$actions = [];
 
 			if($isContainer){
 				$ref = &$this->getItemAndSlot($packet->windowId, $packet->slot, $windowId, $saveInventorySlot);
@@ -850,17 +856,21 @@ class InventoryUtils{
 				}
 
 				$action = $this->addNetworkInventoryAction(NetworkInventoryAction::SOURCE_CONTAINER, $windowId, $saveInventorySlot, $oldItem, $item);
-				$pk->actions[] = $action;
+				$actions[] = $action;
 			}
 
 			foreach($otherAction as $action){
-				$pk->actions[] = $action;
+				$actions[] = $action;
 			}
 
 			if(!$heldItem->equalsExact($this->playerHeldItem)){
 				$action = $this->addNetworkInventoryAction(NetworkInventoryAction::SOURCE_CONTAINER, ContainerIds::UI, 0, $heldItem, $this->playerHeldItem);
-				$pk->actions[] = $action;
+				$actions[] = $action;
 			}
+			$pk = new InventoryTransactionPacket();
+			$pk->requestChangedSlots = [];
+			$pk->requestId = InventoryTransactionPacket::TYPE_NORMAL;
+			$pk->trData = NormalTransactionData::new($actions);
 		}
 
 		$accepted_pk = new WindowConfirmationPacket();
@@ -887,7 +897,11 @@ class InventoryUtils{
 	 * @return DataPacket|null
 	 */
 	public function onCreativeInventoryAction(CreativeInventoryActionPacket $packet) : ?DataPacket{
-		if($packet->slot === 65535){
+		$trace = debug_backtrace();
+		foreach($trace as $line) {
+			error_log("{$line["file"]}: line {$line["line"]}");
+		}
+		if($packet->slot === 65535){ //...?
 			$dropItem = Item::get(Item::AIR, 0, 0);
 
 			foreach($this->player->getInventory()->getContents() as $slot => $item){
@@ -907,7 +921,11 @@ class InventoryUtils{
 
 			return null;
 		}else{
-			if($packet->slot === -1){//DropItem
+			//$newItem = ItemFactory::get(0);
+			//$oldItem = ItemFactory::get(0);
+
+
+			if($packet->slot === -1){//DropItem //...? //...?
 				$this->player->dropItem($packet->clickedItem);
 
 				return null;
@@ -946,21 +964,25 @@ class InventoryUtils{
 				$action = $this->addNetworkInventoryAction(NetworkInventoryAction::SOURCE_CONTAINER, ContainerIds::INVENTORY, $saveInventorySlot, $oldItem, $newItem);
 			}
 
-			$pk = new InventoryTransactionPacket();
-			$pk->transactionType = InventoryTransactionPacket::TYPE_NORMAL;
-			$pk->actions[] = $action;
+			/** @var NetworkInventoryAction[] $actions */
+			$actions = [$action];
 
 			if(!$oldItem->isNull() and !$oldItem->equalsExact($newItem)){
 				$action = $this->addNetworkInventoryAction(NetworkInventoryAction::SOURCE_CREATIVE, -1, NetworkInventoryAction::ACTION_MAGIC_SLOT_CREATIVE_DELETE_ITEM, Item::get(Item::AIR, 0, 0), $oldItem);
 
-				$pk->actions[] = $action;
+				$actions[] = $action;
 			}
 
 			if(!$newItem->isNull() and !$oldItem->equalsExact($newItem)){
 				$action = $this->addNetworkInventoryAction(NetworkInventoryAction::SOURCE_CREATIVE, -1, NetworkInventoryAction::ACTION_MAGIC_SLOT_CREATIVE_CREATE_ITEM, $newItem, Item::get(Item::AIR, 0, 0));
 
-				$pk->actions[] = $action;
+				$actions[] = $action;
 			}
+
+			$pk = new InventoryTransactionPacket();
+			$pk->requestChangedSlots = [];
+			$pk->requestId = InventoryTransactionPacket::TYPE_NORMAL;
+			$pk->trData = NormalTransactionData::new($actions);
 
 			$this->checkInventoryTransactionPacket($pk);
 
@@ -971,7 +993,6 @@ class InventoryUtils{
 	/**
 	 * @param TakeItemActorPacket $packet
 	 * @return OutboundPacket|null
-	 * @throws
 	 */
 	public function onTakeItemEntity(TakeItemActorPacket $packet) : ?OutboundPacket{
 		$itemCount = 1;
@@ -998,28 +1019,28 @@ class InventoryUtils{
 		$pk = new EntityEquipmentPacket();
 		$pk->entityId = $packet->entityRuntimeId;
 		$pk->slot = 5;
-		$pk->item = $packet->head;
+		$pk->item = $packet->head->getItemStack();
 		$packets[] = $pk;
 		$this->playerArmorSlot[0] = $pk->item;
 
 		$pk = new EntityEquipmentPacket();
 		$pk->entityId = $packet->entityRuntimeId;
 		$pk->slot = 4;
-		$pk->item = $packet->chest;
+		$pk->item = $packet->chest->getItemStack();
 		$packets[] = $pk;
 		$this->playerArmorSlot[1] = $pk->item;
 
 		$pk = new EntityEquipmentPacket();
 		$pk->entityId = $packet->entityRuntimeId;
 		$pk->slot = 3;
-		$pk->item = $packet->legs;
+		$pk->item = $packet->legs->getItemStack();
 		$packets[] = $pk;
 		$this->playerArmorSlot[2] = $pk->item;
 
 		$pk = new EntityEquipmentPacket();
 		$pk->entityId = $packet->entityRuntimeId;
 		$pk->slot = 2;
-		$pk->item = $packet->feet;
+		$pk->item = $packet->feet->getItemStack();
 		$packets[] = $pk;
 		$this->playerArmorSlot[3] = $pk->item;
 
@@ -1110,8 +1131,8 @@ class InventoryUtils{
 		$action->sourceType = $sourceType;
 		$action->windowId = $windowId;
 		$action->inventorySlot = $inventorySlot;
-		$action->oldItem = $oldItem;
-		$action->newItem = $newItem;
+		$action->oldItem = ItemStackWrapper::legacy($oldItem);
+		$action->newItem = ItemStackWrapper::legacy($newItem);
 
 		return $action;
 	}
@@ -1119,12 +1140,12 @@ class InventoryUtils{
 	/**
 	 * @param InventoryTransactionPacket  $packet
 	 * @return bool
-	 * @throws
+	 * @throws UnexpectedValueException|ReflectionException
 	 */
 	public function checkInventoryTransactionPacket(InventoryTransactionPacket $packet) : bool{
 		$errors = 0;
 		$actions = [];
-		foreach($packet->actions as $actionNumber => $networkInventoryAction){
+		foreach($packet->trData->getActions() as $actionNumber => $networkInventoryAction){
 			$action = $networkInventoryAction->createInventoryAction($this->player);
 
 			if($action === null){

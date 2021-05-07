@@ -95,7 +95,7 @@ class BigBrother extends PluginBase implements Listener{
 		}
 
 		if($enable){
-			if(Info::CURRENT_PROTOCOL === 422){
+			if(Info::CURRENT_PROTOCOL === 431){
 				ConvertUtils::init();
 
 				$this->saveDefaultConfig();
@@ -178,7 +178,7 @@ class BigBrother extends PluginBase implements Listener{
 					return;
 				}
 
-				$this->onlineMode = (bool) $this->getConfig()->get("online-mode");
+				$this->onlineMode = (bool) ($this->getConfig()->get("online-mode") | $this->getConfig()->get("xbox-auth"));//
 				if($this->onlineMode){
 					$this->getLogger()->info("Server is being started in the background");
 					$this->getLogger()->info("Generating keypair");
@@ -267,7 +267,7 @@ class BigBrother extends PluginBase implements Listener{
 
 	/**
 	 * @param string $username
-	 * @param array profile
+	 * @param array $profile
 	 */
 	public function setProfileCache(string $username, array $profile) : void{
 		$this->profileCache[$username] = [
@@ -673,6 +673,7 @@ class BigBrother extends PluginBase implements Listener{
  * prevents access to $this/self from included file
  * @param string $file
  * @return void
+ * @phpstan-return void|mixed
  */
 function __require(string $file){
 	/** @noinspection PhpIncludeInspection */

@@ -35,9 +35,9 @@ class EntityRotationPacket extends OutboundPacket{
 
 	/** @var int */
 	public $entityId;
-	/** @var int */
+	/** @var float */
 	public $yaw;
-	/** @var int */
+	/** @var float */
 	public $pitch;
 	/** @var bool */
 	public $onGround;

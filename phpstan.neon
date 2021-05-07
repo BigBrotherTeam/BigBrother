@@ -1,0 +1,61 @@
+parameters:
+  level: 5
+  excludes_analyse:
+    - src\fallendead\libs
+  paths:
+    - src
+  scanDirectories:
+    - \library
+  bootstrapFiles:
+    - \vendor\pocketmine\pocketmine-mp\tests\phpstan\bootstrap.php
+    - \library\bootstrap.php
+    - \vendor\autoload.php
+  ignoreErrors:
+    -
+      message: '#^Comparison operation \"\>\" between 1 and 4 is always false\.$#'
+      count: 3
+      path: \src\shoghicp\BigBrother\network\ProtocolInterface.php
+    -
+      message: '#^Comparison operation \"\>\" between 1 and 1 is always false\.$#'
+      count: 1
+      path: \src\shoghicp\BigBrother\network\ProtocolInterface.php
+    -
+      message: '#^Comparison operation \"\>\" between 1 and 3 is always false\.$#'
+      count: 3
+      path: \src\shoghicp\BigBrother\network\Translator.php
+    -
+      message: '#^Comparison operation \"\>\" between 1 and 4 is always false\.$#'
+      count: 2
+      path: \src\shoghicp\BigBrother\network\Translator.php
+    -
+      message: '#^Comparison operation \"\>\" between 1 and 4 is always false\.$#'
+      count: 1
+      path: \src\shoghicp\BigBrother\network\protocol\Play\Server\EntityPropertiesPacket.php
+    -
+      message: '#^Comparison operation \"\>\" between 1 and 4 is always false\.$#'
+      count: 1
+      path: \src\shoghicp\BigBrother\utils\Binary.php
+    -
+      message: '#^Comparison operation \"\>\" between 1 and 3 is always false\.$#'
+      count: 4
+      path: \src\shoghicp\BigBrother\utils\InventoryUtils.php
+    -
+      message: '#^PHPDoc tag \@param has invalid value \([^\)]*\): Unexpected token \"\&\", expected variable at offset \d*$#'
+      count: 5
+      path: \src\shoghicp\BigBrother\utils\ConvertUtils.php
+    -
+      message: '#^PHPDoc tag \@param has invalid value \([^\)]*\): Unexpected token \"\&\", expected variable at offset \d*$#'
+      count: 3
+      path: \src\shoghicp\BigBrother\utils\Binary.php
+    -
+      message: '#^PHPDoc tag \@param has invalid value \([^\)]*\): Unexpected token \"\&\", expected variable at offset \d*$#'
+      count: 1
+      path: \src\shoghicp\BigBrother\network\ServerThread.php
+    -
+      message: '#^Else branch is unreachable because previous condition is always true\.$#'
+      count: 1
+      path: \src\shoghicp\BigBrother\BigBrother.php
+
+
+
+

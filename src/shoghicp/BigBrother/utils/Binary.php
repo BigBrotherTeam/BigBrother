@@ -54,6 +54,14 @@ class Binary extends \pocketmine\utils\Binary{
 		return substr($uuid, 0, 8) ."-". substr($uuid, 8, 4) ."-". substr($uuid, 12, 4) ."-". substr($uuid, 16, 4) ."-". substr($uuid, 20);
 	}
 
+	public static function hexentities($str){//debug
+		$return = '';
+		for($i = 0, $iMax = strlen($str); $i < $iMax; $i++) {
+			$return .= '&#x'.bin2hex(substr($str, $i, 1)).';';
+		}
+		return $return;
+	}
+
 	/**
 	 * @param array $data
 	 * @return string
@@ -78,6 +86,8 @@ class Binary extends \pocketmine\utils\Binary{
 			$m .= self::writeByte($bottom);
 			$m .= self::writeComputerVarInt($d[0]);
 
+
+
 			switch($d[0]){
 				case 0://Byte
 					$m .= self::writeByte($d[1]);
@@ -89,22 +99,23 @@ class Binary extends \pocketmine\utils\Binary{
 					$m .= self::writeFloat($d[1]);
 				break;
 				case 3://String
-				case 4://Chat
+				case 4://component
 					$m .= self::writeComputerVarInt(strlen($d[1])) . $d[1];
 				break;
-				case 5://OptChat
+				case 5://Optcomponent
 					$m .= self::writeBool($d[1][0]);
 					if($d[1][0]){
 						$m .= self::writeComputerVarInt(strlen($d[1][1])) . $d[1][1];
 					}
+
 				break;
 				case 6://Slot
-					/** @var Item $item */
-					$m .= self::writeBool(false);
-					/*$item = $d[1];
+					// @var Item $item
+					$item = $d[1];
 					if($item->getId() === 0){
 						$m .= self::writeBool(false);
 					}else{
+						$m .= self::writeBool(true);
 						$m .= self::writeComputerVarInt($item->getId());
 						$m .= self::writeByte($item->getCount());
 						//$m .= self::writeShort($item->getDamage());
@@ -115,7 +126,7 @@ class Binary extends \pocketmine\utils\Binary{
 						}else{
 							$m .= "\x00";//TAG_End
 						}
-					}*/
+					}
 				break;
 				case 7://Boolean
 					$m .= self::writeByte($d[1] ? 1 : 0);
@@ -147,6 +158,7 @@ class Binary extends \pocketmine\utils\Binary{
 	/**
 	 * @param string $buffer
 	 * @param int    &$offset
+	 * @phpstan-param int $offset
 	 * @return int
 	 */
 	public static function readComputerVarInt(string $buffer, int &$offset = 0) : int{
@@ -167,6 +179,7 @@ class Binary extends \pocketmine\utils\Binary{
 	/**
 	 * @param Session $session
 	 * @param int     &$offset
+	 * @phpstan-param int $offset
 	 * @return int|bool
 	 */
 	public static function readVarIntSession(Session $session, int &$offset = 0){
@@ -192,6 +205,7 @@ class Binary extends \pocketmine\utils\Binary{
 	/**
 	 * @param resource $fp
 	 * @param int      &$offset
+	 * @phpstan-param int $offset
 	 * @return int|bool
 	 */
 	public static function readVarIntStream($fp, int &$offset = 0){

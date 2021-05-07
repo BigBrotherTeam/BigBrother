@@ -29,12 +29,13 @@ declare(strict_types=1);
 
 namespace shoghicp\BigBrother\network\protocol\Play\Server;
 
+use pocketmine\utils\UUID;
 use shoghicp\BigBrother\network\OutboundPacket;
 
 class SpawnEntityPacket extends OutboundPacket{
 
 	const BOAT              =  1;
-	const ITEM_STACK        =  2;
+	const ITEM_STACK        =  37;
 	const AREA_EFFECT_CLOUD =  3;
 	const MINECART          = 10;
 	const ACTIVATED_TNT     = 50;
@@ -77,16 +78,18 @@ class SpawnEntityPacket extends OutboundPacket{
 	public $pitch;
 	/** @var float */
 	public $yaw;
+	/** @var float */
+	public $headyaw = 0;
 	/** @var int */
 	public $data = 0;
 	/** @var bool */
 	public $sendVelocity = false;
 	/** @var float */
-	public $velocityX;
+	public $velocityX = 0;
 	/** @var float */
-	public $velocityY;
+	public $velocityY = 0;
 	/** @var float */
-	public $velocityZ;
+	public $velocityZ = 0;
 
 	public function pid() : int{
 		return self::SPAWN_ENTITY_PACKET;
@@ -94,7 +97,7 @@ class SpawnEntityPacket extends OutboundPacket{
 
 	protected function encode() : void{
 		$this->putVarInt($this->entityId);
-		$this->put($this->uuid);
+		$this->put($this->uuid);//
 		$this->putVarInt($this->type);
 		$this->putDouble($this->x);
 		$this->putDouble($this->y);
@@ -102,11 +105,13 @@ class SpawnEntityPacket extends OutboundPacket{
 		$this->putAngle($this->pitch);
 		$this->putAngle($this->yaw);
 		$this->putInt($this->data);
-		if($this->sendVelocity){
+
+
+		//if($this->sendVelocity){
 			$this->putShort((int) round($this->velocityX * 8000));
 			$this->putShort((int) round($this->velocityY * 8000));
 			$this->putShort((int) round($this->velocityZ * 8000));
-		}
+		//}
 	}
 
 }
